@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truyện Nghe là muốn đi Đồ Sơn</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: black;
+            color: white;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            background-color: #333;
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            margin: 20px;
+        }
+        .nav button {
+            padding: 15px 30px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px;
+            background-color: #444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        .container {
+            display: flex;
+            width: 80%;
+            min-height: 60vh;
+            background-color: white;
+            color: black;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        .content {
+            flex: 3;
+            padding: 20px;
+        }
+        .ranking {
+            flex: 1;
+            background-color: #f4f4f4;
+            padding: 20px;
+            border-left: 2px solid #000;
+        }
+        .footer {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            margin-top: 20px;
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .gif-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 20px;
+        }
+        .gif-container img {
+            width: 80%;
+            border: 2px solid black;
+            border-radius: 10px;
+        }
+        .content-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Truyện Nghe là muốn đi Đồ Sơn</div>
+    <div class="nav">
+        <button onclick="showContent('read')">Đọc Truyện</button>
+        <button onclick="showContent('listen')">Nghe Truyện Có Sẵn</button>
+    </div>
+    <div class="container">
+        <div class="content" id="content">Chọn một lựa chọn.</div>
+        <div class="ranking">
+            <h3>Top 5 Truyện Nên Nghe</h3>
+            <ol>
+                <li>Truyện 1</li>
+                <li>Truyện 2</li>
+                <li>Truyện 3</li>
+                <li>Truyện 4</li>
+                <li>Truyện 5</li>
+            </ol>
+        </div>
+    </div>
+    <div class="footer">
+        <a href="https://www.facebook.com" target="_blank">Facebook</a> 
+        <a href="#">Giấy phép DMCA</a>
+    </div>
+    <script>
+        function showContent(type) {
+            const content = document.getElementById('content');
+            if (type === 'read') {
+                content.innerHTML = `
+                    <h2>Đọc Truyện</h2>
+                    <div class="content-wrapper">
+                        <div>
+                            <input type="file" id="fileInput" accept="audio/*">
+                            <button onclick="playAudio()">Phát Nhạc</button>
+                            <button onclick="pauseAudio()">Dừng Nhạc</button>
+                            <audio id="audioPlayer" controls></audio>
+                        </div>
+                        <div class="gif-container">
+                            <img src="C:/Users/tun22/OneDrive/Documents/mwynnj4p1d7d1.gif" alt="Truyện GIF">
+                        </div>
+                    </div>
+                `;
+            } else {
+                content.innerHTML = '<h2>Nghe Truyện Có Sẵn</h2>';
+                let stories = ['Truyện 1', 'Truyện 2', 'Truyện 3'];
+                let storyList = '<ul>';
+                stories.forEach((story, index) => {
+                    storyList += `<li><button onclick="showEpisodes(${index + 1})">${story}</button></li>`;
+                });
+                storyList += '</ul>';
+                content.innerHTML += storyList;
+                content.innerHTML += '<div id="episodes"></div>';
+            }
+        }
+        
+        function showEpisodes(storyIndex) {
+            const episodesDiv = document.getElementById('episodes');
+            let episodes = `<h3>Chọn tập truyện ${storyIndex}</h3><ul>`;
+            for (let i = 1; i <= 5; i++) {
+                episodes += `<li><button onclick="playStory(${storyIndex}, ${i})">Tập ${i}</button></li>`;
+            }
+            episodes += '</ul>';
+            episodesDiv.innerHTML = episodes;
+        }
+        
+        function playStory(storyIndex, episode) {
+            alert(`Đang phát Truyện ${storyIndex} - Tập ${episode}`);
+        }
+        
+        function playAudio() {
+            const fileInput = document.getElementById('fileInput');
+            const audioPlayer = document.getElementById('audioPlayer');
+            if (fileInput.files.length > 0) {
+                const fileURL = URL.createObjectURL(fileInput.files[0]);
+                audioPlayer.src = fileURL;
+                audioPlayer.play();
+            }
+        }
+
+        function pauseAudio() {
+            const audioPlayer = document.getElementById('audioPlayer');
+            audioPlayer.pause();
+        }
+    </script>
+</body>
+</html>
